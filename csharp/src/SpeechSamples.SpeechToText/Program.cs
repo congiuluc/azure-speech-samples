@@ -71,7 +71,7 @@ public class Program
         Console.WriteLine("--- Single-shot Recognition ---");
         Console.WriteLine("Speak into your microphone...");
 
-        var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+        var speechConfig = settings.CreateSpeechConfig();
         speechConfig.SpeechRecognitionLanguage = settings.Language;
 
         using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();

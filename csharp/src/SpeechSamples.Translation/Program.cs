@@ -80,8 +80,7 @@ public class Program
         Console.WriteLine("--- Single-shot Translation ---");
         Console.WriteLine("Speak into your microphone...");
 
-        var translationConfig = SpeechTranslationConfig.FromSubscription(
-            settings.SubscriptionKey, settings.Region);
+        var translationConfig = settings.CreateTranslationConfig();
         translationConfig.SpeechRecognitionLanguage = settings.Language;
         translationConfig.AddTargetLanguage(settings.TargetLanguage);
 
@@ -123,8 +122,7 @@ public class Program
         Console.WriteLine("--- Continuous Translation ---");
         Console.WriteLine("Speak into your microphone. Press Ctrl+C to stop.");
 
-        var translationConfig = SpeechTranslationConfig.FromSubscription(
-            settings.SubscriptionKey, settings.Region);
+        var translationConfig = settings.CreateTranslationConfig();
         translationConfig.SpeechRecognitionLanguage = settings.Language;
         translationConfig.AddTargetLanguage(settings.TargetLanguage);
 
@@ -186,8 +184,7 @@ public class Program
             $"Translating from {settings.Language} to: {string.Join(", ", targetLanguages)}");
         Console.WriteLine("Speak into your microphone...");
 
-        var translationConfig = SpeechTranslationConfig.FromSubscription(
-            settings.SubscriptionKey, settings.Region);
+        var translationConfig = settings.CreateTranslationConfig();
         translationConfig.SpeechRecognitionLanguage = settings.Language;
 
         foreach (var lang in targetLanguages)
@@ -275,8 +272,7 @@ public class Program
         Console.WriteLine($"{"Time",-12} {"Speaker",-12} {"Original",-40} Translation");
         Console.WriteLine(new string('-', 110));
 
-        var translationConfig = SpeechTranslationConfig.FromSubscription(
-            settings.SubscriptionKey, settings.Region);
+        var translationConfig = settings.CreateTranslationConfig();
         translationConfig.SpeechRecognitionLanguage = settings.Language;
         translationConfig.AddTargetLanguage(settings.TargetLanguage);
 

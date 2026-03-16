@@ -1,98 +1,79 @@
 # Azure Speech Services Demo Samples
 
-A collection of .NET 10 console applications demonstrating Azure Cognitive Services Speech SDK features, with a focus on **Speech-to-Text** and **speaker diarization** across all demos.
+A collection of demo applications in **C# (.NET 10)** and **Python** demonstrating Azure Cognitive Services Speech SDK features, with a focus on **Speech-to-Text** and **speaker diarization** across all demos.
 
 ## Description
 
-This solution contains 4 demo applications, each showcasing a different Azure Speech Service capability. All demos include Speech-to-Text recognition with speaker diarization (identifying who spoke when).
+This repository contains 4 demo applications in two languages (C# and Python), each showcasing a different Azure Speech Service capability. All demos include Speech-to-Text recognition with speaker diarization (identifying who spoke when).
 
 | Demo | Service | Features |
 |------|---------|----------|
 | **SpeechToText** | Speech-to-Text | Single-shot & continuous recognition, real-time diarization |
 | **TextToSpeech** | Text-to-Speech | Neural TTS, SSML, voice listing, round-trip STT→TTS→STT |
 | **Translation** | Speech Translation | Real-time translation, multi-language, diarized translation |
-| **SpeakerRecognition** | Conversation Transcription | Multi-speaker transcription, pronunciation assessment, keyword recognition |
+| **ConversationTranscription** | Conversation Transcription | Multi-speaker transcription, pronunciation assessment, keyword recognition |
 
 ## Prerequisites
 
-- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (for C# demos)
+- [Python 3.9+](https://www.python.org/downloads/) (for Python demos)
 - An [Azure Speech Service](https://learn.microsoft.com/azure/ai-services/speech-service/overview) resource
 - A working microphone (for real-time demos) or WAV audio files
 
-## Installation
+## Quick Start
 
-1. Clone this repository
-2. Copy the settings template and configure your Azure credentials:
+### C# Version
 
-   ```bash
-   # Edit appsettings.json in any demo project folder
-   # Set your SubscriptionKey and Region
-   ```
-
-   Or set environment variables:
-   ```bash
-   set AZURE_SPEECH_KEY=your-subscription-key
-   set AZURE_SPEECH_REGION=westeurope
-   ```
-
-3. Restore and build:
-   ```bash
-   dotnet build SpeechSamples.slnx
-   ```
-
-## Usage Examples
-
-### Speech-to-Text with Diarization
 ```bash
+cd csharp
+dotnet build SpeechSamples.slnx
+
+# Edit appsettings.json in any demo project with your Azure key, then:
 dotnet run --project src/SpeechSamples.SpeechToText/SpeechSamples.SpeechToText.csproj
 ```
-- Option 1: Single-shot recognition from microphone
-- Option 2: Continuous recognition with speaker diarization (microphone)
-- Option 3: Continuous recognition with speaker diarization (audio file)
 
-### Text-to-Speech
-```bash
-dotnet run --project src/SpeechSamples.TextToSpeech/SpeechSamples.TextToSpeech.csproj
-```
-- Option 1-3: Synthesize to speaker, WAV file, or with SSML
-- Option 4: List available neural voices
-- Option 5: Round-trip demo (STT with diarization → TTS → STT verification)
+### Python Version
 
-### Speech Translation
 ```bash
-dotnet run --project src/SpeechSamples.Translation/SpeechSamples.Translation.csproj
-```
-- Option 1-2: Single-shot and continuous translation
-- Option 3: Multi-language translation (it→en, de, fr, es)
-- Option 4-5: Diarization + Translation (microphone/file)
+cd python
+python -m venv .venv
+.venv\Scripts\activate          # Windows
+# source .venv/bin/activate     # Linux/macOS
+pip install -r requirements.txt
 
-### Conversation Transcription & Pronunciation Assessment
-```bash
-dotnet run --project src/SpeechSamples.SpeakerRecognition/SpeechSamples.SpeakerRecognition.csproj
+# Copy .env.template to .env and fill in your Azure key, then:
+python speech_to_text/main.py
 ```
-- Option 1-2: Multi-speaker conversation transcription with diarization
-- Option 3-4: Pronunciation assessment with scoring
-- Option 5: Keyword recognition + STT with diarization
 
 ## Project Structure
 
 ```
 SpeechSamples/
-├── SpeechSamples.slnx
-├── src/
-│   ├── SpeechSamples.Shared/          # Shared settings, DiarizationHelper
-│   ├── SpeechSamples.SpeechToText/    # Speech-to-Text demo
-│   ├── SpeechSamples.TextToSpeech/    # Text-to-Speech demo
-│   ├── SpeechSamples.Translation/     # Speech Translation demo
-│   └── SpeechSamples.SpeakerRecognition/ # Conversation Transcription demo
-├── tests/
-├── docs/
-└── README.md
+├── README.md
+├── .gitignore
+├── csharp/                              # C# (.NET 10) demos
+│   ├── SpeechSamples.slnx
+│   ├── src/
+│   │   ├── SpeechSamples.Shared/        # Shared settings, DiarizationHelper
+│   │   ├── SpeechSamples.SpeechToText/  # Speech-to-Text demo
+│   │   ├── SpeechSamples.TextToSpeech/  # Text-to-Speech demo
+│   │   ├── SpeechSamples.Translation/   # Speech Translation demo
+│   │   └── SpeechSamples.SpeakerRecognition/ # Conversation Transcription demo
+│   ├── tests/
+│   └── docs/
+└── python/                              # Python demos
+    ├── requirements.txt
+    ├── .env.template
+    ├── shared/                          # Shared settings, DiarizationHelper
+    ├── speech_to_text/                  # Speech-to-Text demo
+    ├── text_to_speech/                  # Text-to-Speech demo
+    ├── translation/                     # Speech Translation demo
+    └── conversation_transcription/      # Conversation Transcription demo
 ```
 
 ## Configuration
 
-Edit `appsettings.json` in any demo project:
+### C# — appsettings.json
 
 ```json
 {
@@ -106,13 +87,29 @@ Edit `appsettings.json` in any demo project:
 }
 ```
 
+### Python — .env
+
+```env
+AZURE_SPEECH_KEY=your-subscription-key
+AZURE_SPEECH_REGION=westeurope
+AZURE_SPEECH_LANGUAGE=it-IT
+AZURE_SPEECH_TARGET_LANGUAGE=en
+AZURE_SPEECH_VOICE_NAME=it-IT-ElsaNeural
+```
+
 | Setting | Description | Default |
 |---------|-------------|---------|
-| `SubscriptionKey` | Azure Speech Service key | - |
-| `Region` | Azure region | `westeurope` |
-| `Language` | Source language (BCP-47) | `it-IT` |
-| `TargetLanguage` | Translation target | `en` |
-| `VoiceName` | TTS neural voice | `it-IT-ElsaNeural` |
+| Subscription Key | Azure Speech Service key | - |
+| Region | Azure region | `westeurope` |
+| Language | Source language (BCP-47) | `it-IT` |
+| Target Language | Translation target | `en` |
+| Voice Name | TTS neural voice | `it-IT-ElsaNeural` |
+
+## Demo Details
+
+See the language-specific READMEs for detailed usage:
+- [C# README](csharp/src/SpeechSamples.SpeechToText/README.md)
+- [Python README](python/README.md)
 
 ## License
 

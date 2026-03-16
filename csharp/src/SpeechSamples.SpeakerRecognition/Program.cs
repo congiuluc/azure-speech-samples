@@ -165,7 +165,7 @@ public class Program
             Console.WriteLine($"Using default reference text: \"{referenceText}\"");
         }
 
-        var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+        var speechConfig = settings.CreateSpeechConfig();
         speechConfig.SpeechRecognitionLanguage = settings.Language;
 
         var pronunciationConfig = new PronunciationAssessmentConfig(
@@ -283,7 +283,7 @@ public class Program
 
         if (!string.IsNullOrEmpty(keywordModelPath) && File.Exists(keywordModelPath))
         {
-            var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+            var speechConfig = settings.CreateSpeechConfig();
             speechConfig.SpeechRecognitionLanguage = settings.Language;
 
             using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();

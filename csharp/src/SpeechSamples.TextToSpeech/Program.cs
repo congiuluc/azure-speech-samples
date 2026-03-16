@@ -85,7 +85,7 @@ public class Program
             return;
         }
 
-        var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+        var speechConfig = settings.CreateSpeechConfig();
         speechConfig.SpeechSynthesisVoiceName = settings.VoiceName;
 
         using var audioConfig = AudioConfig.FromDefaultSpeakerOutput();
@@ -116,7 +116,7 @@ public class Program
             outputPath = "output.wav";
         }
 
-        var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+        var speechConfig = settings.CreateSpeechConfig();
         speechConfig.SpeechSynthesisVoiceName = settings.VoiceName;
 
         using var audioConfig = AudioConfig.FromWavFileOutput(outputPath);
@@ -158,7 +158,7 @@ public class Program
         Console.WriteLine(ssml);
         Console.WriteLine();
 
-        var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+        var speechConfig = settings.CreateSpeechConfig();
 
         using var audioConfig = AudioConfig.FromDefaultSpeakerOutput();
         using var synthesizer = new SpeechSynthesizer(speechConfig, audioConfig);
@@ -173,7 +173,7 @@ public class Program
     private static async Task ListVoicesAsync(SpeechSettings settings)
     {
         Console.WriteLine("--- Available Voices ---");
-        var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+        var speechConfig = settings.CreateSpeechConfig();
 
         using var synthesizer = new SpeechSynthesizer(speechConfig, null);
         var voicesResult = await synthesizer.GetVoicesAsync();
@@ -241,7 +241,7 @@ public class Program
         Console.WriteLine($"[Step 2] Synthesizing combined text: \"{combinedText}\"");
 
         var tempWav = Path.Combine(Path.GetTempPath(), $"roundtrip_{Guid.NewGuid()}.wav");
-        var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+        var speechConfig = settings.CreateSpeechConfig();
         speechConfig.SpeechSynthesisVoiceName = settings.VoiceName;
 
         using (var audioConfig = AudioConfig.FromWavFileOutput(tempWav))

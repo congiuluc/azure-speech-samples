@@ -44,7 +44,7 @@ namespace SpeechSamples.Shared
             if (!File.Exists(audioFilePath))
                 throw new FileNotFoundException("Audio file not found.", audioFilePath);
 
-            var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+            var speechConfig = settings.CreateSpeechConfig();
             speechConfig.SpeechRecognitionLanguage = settings.Language;
             speechConfig.SetProperty(PropertyId.SpeechServiceResponse_DiarizeIntermediateResults, "true");
 
@@ -60,7 +60,7 @@ namespace SpeechSamples.Shared
         public async Task<List<DiarizedSegment>> RecognizeFromMicrophoneAsync(
             CancellationToken cancellationToken = default)
         {
-            var speechConfig = SpeechConfig.FromSubscription(settings.SubscriptionKey, settings.Region);
+            var speechConfig = settings.CreateSpeechConfig();
             speechConfig.SpeechRecognitionLanguage = settings.Language;
             speechConfig.SetProperty(PropertyId.SpeechServiceResponse_DiarizeIntermediateResults, "true");
 
