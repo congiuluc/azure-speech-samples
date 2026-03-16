@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SpeechSamples.Shared/SpeechSamples.Shared.csproj" />
+    <Project Path="src/SpeechSamples.SpeakerRecognition/SpeechSamples.SpeakerRecognition.csproj" />
+    <Project Path="src/SpeechSamples.SpeechToText/SpeechSamples.SpeechToText.csproj" />
+    <Project Path="src/SpeechSamples.TextToSpeech/SpeechSamples.TextToSpeech.csproj" />
+    <Project Path="src/SpeechSamples.Translation/SpeechSamples.Translation.csproj" />
+  </Folder>
+</Solution>
